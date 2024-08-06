@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"pubsub/PubSub"
+	"github.com/hxchen/EasyGo/pubsub"
 	"strings"
 	"time"
 )
