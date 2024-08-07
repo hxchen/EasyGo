@@ -1,19 +1,29 @@
 package main
 
 import (
+	"context"
+	rpc "github.com/hxchen/EasyGo/api/protobuf-spec"
+	"google.golang.org/grpc"
 	"log"
-	"net/rpc"
 )
 
+const PORT = ":1234"
+
 func main() {
-	client, err := rpc.Dial("tcp", "localhost:1234")
+	conn, err := grpc.Dial(PORT, grpc.WithInsecure())
 	if err != nil {
-		log.Fatal("dialing:", err)
+		log.Fatalf("get an error : %v\n", err)
 	}
-	var replay string
-	err = client.Call("LoginService.Login", "request", &replay)
+	defer conn.Close()
+
+	client := rpc.NewHelloServiceClient(conn)
+
+	resp, err := client.Say(context.Background(), &rpc.HelloRequest{
+		Name: "this is client",
+	})
 	if err != nil {
-		log.Fatal("Login error:", err)
+		log.Fatalf("invoke error \n")
 	}
-	log.Println("LoginService.Login:", replay)
+
+	log.Printf("resp : %s\n", resp.GetMessage())
 }
