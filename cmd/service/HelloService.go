@@ -17,7 +17,7 @@ type server struct {
 	hi.HelloServiceServer
 }
 
-func (s *server) SayHello(ctx context.Context, in *hi.HelloRequest) (*hi.HelloResponse, error) {
+func (s *server) Say(ctx context.Context, in *hi.HelloRequest) (*hi.HelloResponse, error) {
 	log.Printf("Received: %s", in.Name)
 	return &hi.HelloResponse{Message: "Hello " + in.Name}, nil
 }
