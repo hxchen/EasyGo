@@ -1,24 +1,10 @@
 package main
 
 import (
-	"io"
 	"log"
 	"net/http"
 	"time"
 )
-
-func echo(wr http.ResponseWriter, r *http.Request) {
-	msg, err := io.ReadAll(r.Body)
-	if err != nil {
-		wr.Write([]byte("read error"))
-		return
-	}
-	writeLen, err := wr.Write(msg)
-	if err != nil || writeLen != len(msg) {
-		log.Println(err, "write len:", writeLen)
-		return
-	}
-}
 
 func welcome(wr http.ResponseWriter, r *http.Request) {
 	wr.Write([]byte("welcome"))
